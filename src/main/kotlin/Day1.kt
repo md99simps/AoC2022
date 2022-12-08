@@ -1,5 +1,5 @@
-fun main(args: Array<String>) {
-    val inputStream = object {}.javaClass.getResourceAsStream("elfcalories.txt")
+fun main() {
+    val inputStream = object {}.javaClass.getResourceAsStream("elfcalories.txt")!!
 
     var currCalories = 0
     val calories = IntArray(3)
