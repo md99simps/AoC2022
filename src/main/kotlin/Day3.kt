@@ -3,7 +3,7 @@ fun main() {
     badgeMixup()
 }
 
-fun itemMixup() {
+private fun itemMixup() {
     val inputStream = object {}.javaClass.getResourceAsStream("rucksacks.txt")!!
 
     var prioritySum = 0
@@ -28,7 +28,7 @@ fun itemMixup() {
     println("Rucksack priority sum $prioritySum")
 }
 
-fun badgeMixup() {
+private fun badgeMixup() {
     val inputStreamReader = object {}.javaClass.getResourceAsStream("rucksacks.txt")?.bufferedReader()!!
     val lines = inputStreamReader.readLines()
     check(lines.size  % 3 == 0) { "Invalid input ${lines.size}"}
@@ -58,7 +58,7 @@ fun badgeMixup() {
 }
 
 fun Char.toPriorityValue(): Int {
-    check(isLetter()) { "Invalid input $this" }
+    require(isLetter()) { "Invalid input $this" }
     return if (isUpperCase()) {
         code - UPPERCASE_ASCII_OFFSET
     } else {

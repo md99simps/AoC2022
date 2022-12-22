@@ -5,7 +5,7 @@ fun main() {
     part2()
 }
 
-fun part1() {
+private fun part1() {
     val inputStream = object {}.javaClass.getResourceAsStream("rpstournament.txt")!!
     var score = 0
 
@@ -22,7 +22,7 @@ fun part1() {
     println("Final score part 1: $score")
 }
 
-fun part2() {
+private fun part2() {
     val inputStream = object {}.javaClass.getResourceAsStream("rpstournament.txt")!!
     var score = 0
 
