@@ -15,11 +15,11 @@ private fun rearrangeCrates() {
     var hasProcessedCrates = false
 
     // Input assumptions:
-    // 1. A line with '[' as its first non-whitespace character will always be treated as a crate input.
-    // 2. A line with '1' as its first non-whitespace character will always be treated as the end of crate input.
-    // 3. A line with "move" as its first non-whitespace substring will always be treated as a move instruction.
-    // 4. All empty lines are considered meaningless, and they are discarded.
-    // 5. All lines must match one of assumptions 1-4.
+    // 1. A line with '[' as its first non-whitespace character is a crate input.
+    // 2. A line with '1' as its first non-whitespace character is the end of crate input.
+    // 3. A line with "move" as its first non-whitespace substring is a move instruction.
+    // 4. All empty lines are meaningless, and they can be discarded.
+    // 5. All lines will match a predicate from assumptions 1-4.
     // 6. All crate input will proceed all move instructions.
     //
     // For inputs that violate assumptions 1-4, behavior is undefined
@@ -106,7 +106,7 @@ private fun CratePiles.stackCrate(crate: Char, whichPile: Int) {
     this[whichPile].addLast(crate)
 }
 
-/** Applies the move instruction represented by [move]. */
+/** Applies the move instruction represented by [move], moving crates between piles individually. */
 private fun CratePiles.moveCrates(move: CrateMove) {
     require(move.fromPile > 0 && move.fromPile <= this.size) { "Can't move crates from pile ${move.fromPile - 1} that does not exist" }
     require(move.toPile > 0 && move.toPile <= this.size) { "Can't move crates to pile ${move.toPile - 1} that does not exist" }
@@ -117,7 +117,7 @@ private fun CratePiles.moveCrates(move: CrateMove) {
     for (i in 0 until move.quantity) toPile.addFirst(fromPile.removeFirst())
 }
 
-/** Applies the move instruction represented by [move]. */
+/** Applies the move instruction represented by [move], moving the full quantity of crates between piles at once. */
 private fun CratePiles.moveCratesMulti(move: CrateMove) {
     require(move.fromPile > 0 && move.fromPile <= this.size) { "Can't move crates from pile ${move.fromPile - 1} that does not exist" }
     require(move.toPile > 0 && move.toPile <= this.size) { "Can't move crates to pile ${move.toPile - 1} that does not exist" }
@@ -137,6 +137,7 @@ private fun CratePiles.printDbg() {
     }
 }
 
+// This doesn't have to be destructive, but I don't care to optimize that piece away
 private fun CratePiles.prettyPrintDestructive() {
     var maxSize = 0
     val pileSizes = Array(this.size) { 0 }
