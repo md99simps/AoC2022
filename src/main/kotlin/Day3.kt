@@ -3,11 +3,9 @@ fun main() {
     badgeMixup()
 }
 
-private fun itemMixup() {
-    val inputStream = object {}.javaClass.getResourceAsStream("rucksacks.txt")!!
-
+private fun itemMixup() = object {}.javaClass.getResourceAsStream("rucksacks.txt")!!.use {
     var prioritySum = 0
-    inputStream.bufferedReader().forEachLine { line ->
+    it.bufferedReader().forEachLine { line ->
         check(line.length % 2 == 0) { "Invalid input $line" }
         val chars = mutableSetOf<Char>()
         for (i in 0 until line.length / 2) {
@@ -28,16 +26,15 @@ private fun itemMixup() {
     println("Rucksack priority sum $prioritySum")
 }
 
-private fun badgeMixup() {
-    val inputStreamReader = object {}.javaClass.getResourceAsStream("rucksacks.txt")?.bufferedReader()!!
-    val lines = inputStreamReader.readLines()
-    check(lines.size  % 3 == 0) { "Invalid input ${lines.size}"}
+private fun badgeMixup() = object {}.javaClass.getResourceAsStream("rucksacks.txt")?.bufferedReader()!!.use {
+    val lines = it.readLines()
+    check(lines.size % 3 == 0) { "Invalid input ${lines.size}" }
 
     var prioritySum = 0
     for (i in lines.indices step 3) {
         val line1 = lines[i]
-        val line2 = lines[i+1]
-        val line3 = lines[i+2]
+        val line2 = lines[i + 1]
+        val line3 = lines[i + 2]
         val initialCandidates = mutableSetOf<Char>()
         for (c in line1) {
             initialCandidates.add(c)
@@ -50,7 +47,7 @@ private fun badgeMixup() {
         for (c in line3) {
             if (secondaryCandidates.contains(c)) finalCandidates.add(c)
         }
-        check(finalCandidates.size == 1) { "Invalid input (1) $line1 (2) $line2 (3) $line3"}
+        check(finalCandidates.size == 1) { "Invalid input (1) $line1 (2) $line2 (3) $line3" }
         prioritySum += finalCandidates.first().toPriorityValue()
     }
 

@@ -5,9 +5,7 @@ fun main() {
     rearrangeCrates()
 }
 
-private fun rearrangeCrates() {
-    val inputStream = object {}.javaClass.getResourceAsStream("craterearrangement.txt")!!
-
+private fun rearrangeCrates() = object {}.javaClass.getResourceAsStream("craterearrangement.txt")!!.use {
     // Small shortcut, we can easily know the number of piles by examining the input file. Ideally we'd parse this from the input.
     val cratePiles9000: CratePiles = Array(9) { ArrayDeque() }
     val cratePiles9001: CratePiles = Array(9) { ArrayDeque() }
@@ -24,7 +22,7 @@ private fun rearrangeCrates() {
     //
     // For inputs that violate assumptions 1-4, behavior is undefined
     // For inputs that violate assumptions 5-6, the program will exit with IllegalStateException
-    inputStream.bufferedReader().forEachLine { line ->
+    it.bufferedReader().forEachLine { line ->
         if (line.trim().startsWith('[')) {
             if (hasProcessedCrates) { // All crate input must proceed all move instructions
                 throw IllegalStateException("Out of order input $line")

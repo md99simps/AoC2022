@@ -1,15 +1,12 @@
-import kotlin.IllegalArgumentException
-
 fun main() {
     part1()
     part2()
 }
 
-private fun part1() {
-    val inputStream = object {}.javaClass.getResourceAsStream("rpstournament.txt")!!
+private fun part1() = object {}.javaClass.getResourceAsStream("rpstournament.txt")!!.use {
     var score = 0
 
-    inputStream.bufferedReader().forEachLine { line ->
+    it.bufferedReader().forEachLine { line ->
         val plays = line.trim().split(" ")
         check(plays.size == 2)
         val opponentsPlay = plays[0].decodeOpponent()
@@ -22,11 +19,10 @@ private fun part1() {
     println("Final score part 1: $score")
 }
 
-private fun part2() {
-    val inputStream = object {}.javaClass.getResourceAsStream("rpstournament.txt")!!
+private fun part2() = object {}.javaClass.getResourceAsStream("rpstournament.txt")!!.use {
     var score = 0
 
-    inputStream.bufferedReader().forEachLine { line ->
+    it.bufferedReader().forEachLine { line ->
         val plays = line.trim().split(" ")
         check(plays.size == 2)
         val opponentsPlay = plays[0].decodeOpponent()
@@ -70,9 +66,9 @@ enum class Play(val score: Int) {
     SCISSORS(3);
 
     fun losesTo(): Play = when (this) {
-            ROCK -> PAPER
-            PAPER -> SCISSORS
-            SCISSORS -> ROCK
+        ROCK -> PAPER
+        PAPER -> SCISSORS
+        SCISSORS -> ROCK
     }
 
     fun play(other: Play): Outcome {

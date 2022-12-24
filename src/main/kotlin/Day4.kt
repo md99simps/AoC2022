@@ -2,13 +2,11 @@ fun main() {
     overlappingAssignments()
 }
 
-private fun overlappingAssignments() {
-    val inputStream = object {}.javaClass.getResourceAsStream("sectionassignments.txt")!!
-
+private fun overlappingAssignments() = object {}.javaClass.getResourceAsStream("sectionassignments.txt")!!.use {
     var completelyOverlappingPairs = 0
     var overlappingPairs = 0
 
-    inputStream.bufferedReader().forEachLine { line ->
+    it.bufferedReader().forEachLine { line ->
         val assignments = line.split(',')
         check(assignments.size == 2) { "Invalid assignment pair $assignments" }
         val elf1Bounds =
@@ -47,5 +45,5 @@ private fun Pair<Int, Int>.contains(other: Pair<Int, Int>): Boolean {
 private fun Pair<Int, Int>.overlaps(other: Pair<Int, Int>): Boolean {
     require(this.first <= this.second) { "Invalid assignment $this" }
     require(other.first <= other.second) { "Invalid assignment $other" }
-    return  (this.first >= other.first && this.first <= other.second) || (other.first >= this.first && other.first <= this.second)
+    return (this.first >= other.first && this.first <= other.second) || (other.first >= this.first && other.first <= this.second)
 }

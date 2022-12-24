@@ -1,10 +1,8 @@
-fun main() {
-    val inputStream = object {}.javaClass.getResourceAsStream("elfcalories.txt")!!
-
+fun main() = object {}.javaClass.getResourceAsStream("elfcalories.txt")!!.use {
     var currCalories = 0
     val calories = IntArray(3)
 
-    inputStream.bufferedReader().forEachLine { line ->
+    it.bufferedReader().forEachLine { line ->
         val trimmed = line.trim()
         if (trimmed.isEmpty()) {
             val first = calories[0]
